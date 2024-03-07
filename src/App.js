@@ -1,7 +1,9 @@
+import Spinner from "./components/Spinner";
+
 function App() {
   return (
     <div className="App">
-      <p>helllo media app</p>
+      <Spinner message={`loading`}/>
     </div>
   );
 }
