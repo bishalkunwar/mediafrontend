@@ -1,10 +1,13 @@
-import Spinner from "./components/Spinner";
+// import Spinner from "./components/Spinner";
+import {Routes, Route} from 'react-router-dom';
+import Login from "./components/Login";
+
 
 function App() {
   return (
-    <div className="App">
-      <Spinner message={`loading`}/>
-    </div>
+    <Routes>
+      <Route path='/' element={<Login/>}/>
+    </Routes>
   );
 }
 
