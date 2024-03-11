@@ -31,7 +31,9 @@ const Login = () => {
 
         client.createIfNotExists(doc).then(()=>{
             navigate("/", {replace: true})
+            console.log("user created");
         });
+        console.log("user logged in");
     };
 
     // "967909129849-pgugjp28d1u15rhqi3bvb694ucbch4qr.apps.googleusercontent.com"
