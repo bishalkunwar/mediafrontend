@@ -36,8 +36,8 @@ const Login = () => {
 
     return (
         <GoogleOAuthProvider clientId='967909129849-6ab1gv306flblg0iuaij24t1vafei66k.apps.googleusercontent.com'>
-            <div className='a'>
-                <div className='b'>
+            <div className="flex justify-start items-center flex-col h-screen">
+                <div className="relative w-full h-full">
                     <video
                         src={shareVideo}
                         type="video/mp4"
@@ -45,15 +45,15 @@ const Login = () => {
                         controls={false}
                         muted
                         autoPlay
-                        className=''
+                        className="w-full h-full object-cover"
                     />
 
-                    <div className='c'>
-                        <div className='c-a'>
-                            <img src={logo} alt="logoimage"/>
+                    <div className="absolute flex flex-col justify-center items-center top-0 right-0 left-0 bottom-0 bg-blackOverlay">
+                        <div className='p-5'>
+                            <img src={logo} alt="logoimage" width="130px"/>
                         </div>
 
-                        <div className='d'>
+                        <div className='shadow-2xl'>
                             <GoogleLogin
                             clientId="967909129849-6ab1gv306flblg0iuaij24t1vafei66k.apps.googleusercontent.com"
                             render = {(renderProps)=> (
@@ -61,9 +61,9 @@ const Login = () => {
                                     type='button'
                                     onClick={renderProps.onClick}
                                     disabled={renderProps.disabled}
-                                    className=''
+                                    className='bg-mainColor flex items-center p-3 rounded-lg cursor-pointer outline-none'
                                 >
-                                    <FcGoogle/> 
+                                    <FcGoogle className='mr-4'/> 
                                     Sign in with Google
                                 </button>
                             )}
