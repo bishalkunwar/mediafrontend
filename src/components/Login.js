@@ -34,8 +34,9 @@ const Login = () => {
         });
     };
 
+    // "967909129849-pgugjp28d1u15rhqi3bvb694ucbch4qr.apps.googleusercontent.com"
     return (
-        <GoogleOAuthProvider clientId='967909129849-6ab1gv306flblg0iuaij24t1vafei66k.apps.googleusercontent.com'>
+        <GoogleOAuthProvider clientId="967909129849-pgugjp28d1u15rhqi3bvb694ucbch4qr.apps.googleusercontent.com">
             <div className="flex justify-start items-center flex-col h-screen">
                 <div className="relative w-full h-full">
                     <video
@@ -55,7 +56,7 @@ const Login = () => {
 
                         <div className='shadow-2xl'>
                             <GoogleLogin
-                            clientId="967909129849-6ab1gv306flblg0iuaij24t1vafei66k.apps.googleusercontent.com"
+                            clientId="967909129849-pgugjp28d1u15rhqi3bvb694ucbch4qr.apps.googleusercontent.com"
                             render = {(renderProps)=> (
                                 <button
                                     type='button'

@@ -1,12 +1,14 @@
 // import Spinner from "./components/Spinner";
 import {Routes, Route} from 'react-router-dom';
 import Login from "./components/Login";
+import Home from "./container/Home";
 
 
 function App() {
   return (
     <Routes>
-      <Route path='/' element={<Login/>}/>
+      <Route path='login' element={<Login/>}/>
+      <Route path='/*' element={<Home/>}/>
     </Routes>
   );
 }
