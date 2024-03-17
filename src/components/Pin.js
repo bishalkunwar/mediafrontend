@@ -22,16 +22,63 @@ const Pin = ({pin}) => {
     });
   };
 
-  const alreadySaved = pin?.save?.filter((item)=> item?.postedBy?._id === user?.googleId);
+  let alreadySaved = pin?.save?.filter((item)=> item?.postedBy?._id === user?.googleId);
   alreadySaved = alreadySaved?.length > 0 ? alreadySaved : [];
 
   const savePin = (id) => {
+    if(alreadySaved?.length === 0){
+      setSavingPost(true);
 
+      client.patch(id).setIfMissing({save: []}).insert('after', 'save[-1]', [{
+        _key: uuidv4(),
+        userId: user?.googleId,
+        postedBy: {
+          _type: 'postedBy',
+          _ref: user?.googleId,
+        },
+      }]).commit().then(()=>{
+        window.location.reload();
+        setSavingPost(false);
+      });
+    }
   };
 
   return (
-    <div> 
-      <img src={urlFor(image).width(250).url()} alt='user-post' className='rounded-lg w-full'/>
+    <div className='m-2'>
+      <div className='relative cursor-zoom-in w-auto hover:shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-in-out'
+        onMouseEnter={()=>setPostHovered(true)}
+        onMouseLeave={()=>setPostHovered(false)}
+        onClick={()=>navigate(`/pin-details/${_id}`)}
+      >
+        {image && (
+          <img src={(urlFor(image).width(250).url())} alt='user-post' className='w-full rounded-lg'/>
+        )}{postHovered && (
+          <div className='absolute top-0 w-full h-full flex flex-col justify-between p-1 pr-2 pt-2 pb-2 z-50' style={{height:'100%'}}>
+            <div>
+              <div>
+                <a>
+                  <MdDownloadForOffline/>
+                </a>
+              </div>
+              {alreadySaved?.length !== 0 ? (
+                <button type='button'>
+                  {pin?.save?.length} Saved
+                </button>
+              ) : (
+                <button type='button'>
+                  {pin?.save?.length}{savingPost?'Saving':'Save'}
+                </button>
+              )}
+            </div>
+            
+            <div>
+              
+            </div>
+
+          </div>
+        )}
+      </div> 
+      
     </div>
   )
 }
