@@ -80,14 +80,26 @@ const Pin = ({pin}) => {
 
                 </a>
               ):(undefined)}
-            </div>
+              {postedBy?._id === user?.googleId &&(
+                <button type='button' className='bg-white'>
+                  <AiTwotoneDelete/>
 
+                </button>
+              )
+            }
+            </div>
           </div>
-        )}
+        )}      
+      </div>
+
+      <div>
+          <Link to={`user-profile/${postedBy?._id}`}>
+            <img src={postedBy?.image} alt='user-profile' className=''/>
+            <p>{postedBy?.userName}</p>
+          </Link>
       </div> 
-      
     </div>
   )
-}
+};
 
-export default Pin
+export default Pin;
