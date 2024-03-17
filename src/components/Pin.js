@@ -72,7 +72,14 @@ const Pin = ({pin}) => {
             </div>
             
             <div>
-              
+              {destination?.slice(8).length > 0 ? (
+                <a href={destination} target='_blank' rel='noreferrer' className=''>
+                  {' '}
+                  <BsFillArrowUpRightCircleFill/>
+                  {destination?.slice(8,17)}...
+
+                </a>
+              ):(undefined)}
             </div>
 
           </div>
