@@ -20,7 +20,23 @@ const CreatePin = ({user}) => {
   const navigate = useNavigate();
 
   const uploadImage = (e)=> {
-
+    const selectedFile = e.target.files[0];
+    // uploading asset to sanity
+    if(selectedFile.type==='image/png'||selectedFile.type==='image/svg'||selectedFile.type==='image/jpeg'||selectedFile.type==='image/jpg'||selectedFile.type==='image/tiff'){
+      setWrongImageType(false);
+      setLoading(true);
+      client.assets.upload(
+        'image', selectedFile,{contentType: selectedFile.type, filename: selectedFile.name}
+      ).then((document)=>{
+        setImageAsset(document);
+        setLoading(false);
+      }).catch((error)=>{
+        console.log(`upload failed. error:->${error.message}`);
+      })
+    }else{
+      setLoading(false);
+      setWrongImageType(true);
+    }
   };
 
   const savePin = () => {
