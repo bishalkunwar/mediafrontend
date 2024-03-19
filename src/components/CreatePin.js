@@ -24,7 +24,29 @@ const CreatePin = ({user}) => {
   };
 
   const savePin = () => {
-    if(title && )
+    if(title && about && destination && imageAsset?._id && category){
+      const doc = {
+        _type: 'pin',
+        title,
+        about, 
+        destination, 
+        image: {
+          _type: 'image', asset: {_type: 'reference', _ref: imageAsset?._id,},
+        },
+        userId: user._id,
+        postedBy: {
+          _type: 'postedBy', ref:user._id,
+        },
+        category,
+      };
+
+      client.create(doc).then(()=>{
+        navigate('/');
+      })
+    }else{
+      setFields(true);
+      setTimeout(()=>{setFields(false);}, 2000);
+    }
   };
   return (
     <div className=''>
