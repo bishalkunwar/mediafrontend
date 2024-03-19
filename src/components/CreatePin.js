@@ -3,7 +3,7 @@ import {AiOutlineCloudUpload} from "react-icons/ai";
 import {MdDelete} from "react-icons/md";
 import {useNavigate} from "react-router-dom";
 import Spinner from './Spinner';
-import client from "../utils/client";
+import {client} from "../utils/client";
 import categories from '../utils/data';
 
 
@@ -69,6 +69,88 @@ const CreatePin = ({user}) => {
       <p>Please Add all Fields</p>
       <div>
         {loading && (<Spinner/>)}{wrongImageType && (<p>It&apos;s wrong file type</p>)}
+        {!imageAsset ? (
+          <label>
+            <div>
+              <div>
+                <p><AiOutlineCloudUpload/></p>
+                <p>Click to upload</p>
+              </div>
+              <p>Recommendation: Please use high quality image</p>
+            </div>
+            <input
+              type='file'
+              name='upload image'
+              onChange={uploadImage}
+              className=''
+            />
+          </label>  
+        ) : (
+          <div>
+            <img
+              src="https://react-icons.github.io/react-icons/search/#q=AiTwotoneDelete"
+              alt="uploaded-pic"
+            />
+            <button type='button' onClick={()=>{setImageAsset(null)}}>
+              <MdDelete/>
+            </button>
+          </div>
+        )}
+
+        <div>
+          <input
+            type='text'
+            value={title}
+            onChange={(e)=>setTitle(e.target.value)}
+            placeholder='add your title'
+            className=''
+          />
+          {user && (
+            <div>
+              <img src={user.image} alt='user-profile'/>
+              <p>{user.userName}</p>
+            </div>
+          )}
+
+          <input
+            type='text'
+            value={about}
+            placeholder='about ...'
+            onChange={(e)=>setAbout(e.target.value)}
+            className=''
+
+          />
+
+          <input
+            type='text'
+            placeholder='destination'
+            value={destination}
+            onChange={(e)=>setDestination(e.target.value)}
+            className=''
+          />
+          <div>
+            <p>Choose Your Pin Category</p>
+            <select
+              onChange={(e)=>{
+                setCategory(e.target.value);
+              }}
+            >
+              <option>
+                select categories
+              </option>
+              {categories.map((catg)=>(
+                <option>{catg.name}</option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <button type='button' onClick={savePin} className=''>
+                Save Pin
+            </button>
+          </div>
+          
+        </div>
       </div>
     </div>
   )
