@@ -144,8 +144,8 @@ const CreatePin = ({user}) => {
             </select>
           </div>
 
-          <div>
-            <button type='button' onClick={savePin} className=''>
+          <div className='flex justify-end items-end mt-5'>
+            <button type='button' onClick={savePin} className='bg-red-500 text-white font-bold p-2 rounded-full w-28 outline-none'>
                 Save Pin
             </button>
           </div>
