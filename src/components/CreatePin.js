@@ -18,6 +18,7 @@ const CreatePin = ({user}) => {
   const[imageAsset, setImageAsset] = useState();
   const [wrongImageType, setWrongImageType] = useState(false);
   const navigate = useNavigate();
+  
 
   const uploadImage = (e)=> {
     const selectedFile = e.target.files[0];
@@ -49,10 +50,10 @@ const CreatePin = ({user}) => {
         image: {
           _type: 'image', asset: {_type: 'reference', _ref: imageAsset?._id,},
         },
-        userId: user._id,
-        postedBy: {
-          _type: 'postedBy', ref:user._id,
-        },
+        // userId: user._id,
+        // postedBy: {
+        //   _type: 'postedBy', ref:user._id,
+        // },
         category,
       };
 
@@ -147,7 +148,7 @@ const CreatePin = ({user}) => {
                   select categories
                 </option>
                 {categories.map((catg)=>(
-                  <option className='text-base border-0 outline-none capitalize bg-white text-black'>{catg.name}</option>
+                  <option className='text-base border-0 outline-none capitalize bg-white text-black' value={catg.name}>{catg.name}</option>
                 ))}
               </select>
             </div>
