@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {AiOutlineLogout} from "react-icons/ai";
 import {useParams, useNavigate} from "react-router-dom";
-import {GoogleLogout} from "react-google-login";
+import {googleLogout} from "@react-oauth/google";
 
 import {userCreatedPinsQuery, userQuery, userSavedPinsQuery} from "../utils/data";
 import {client} from "../utils/client";
@@ -48,12 +48,76 @@ const UserProfile = () => {
     navigate('/login');
   };
 
-
-  // if(!user) return <Spinner message="Loading Profile"/>
+  if(!user) return <Spinner message="Loading Profile"/>
+  
+  const randomImage = "https://source.unsplash.com/1600x900/?nature,photography,technology";
 
   return(
-    <div>
-      
+    // relative.
+    <div className='pb-2 h-full justify-center items-center'>
+      <div>
+        <div>
+          <div>
+            <img src={randomImage} alt='random pic'/>
+            <img src={user.image} alt='user-pic'/>
+          </div>
+          <h1>
+            {user.userName}
+          </h1>
+
+          <div>
+            {userId === User.googleId && (
+              <googleLogout
+                clientId = "967909129849-pgugjp28d1u15rhqi3bvb694ucbch4qr.apps.googleusercontent.com"
+                render = {(renderProps)=>(
+                  <button
+                    type='button'
+                    className=''
+                    onClick={renderProps.onClick}
+                    disabled={renderProps.disabled}
+                  >
+                    <AiOutlineLogout color='red' fontSize={21}/>
+                  </button>
+                )}
+                onLogoutSuccess = {logout}
+                cookiePolicy = "single_host_origin"
+              />
+            )}
+          </div>
+        </div>
+        <div>
+          
+        </div>
+          <button
+            type='button'
+            className={`${activeBtn === "created" ? activeBtnStyles : notActiveBtnStyles}`}
+            onClick={(e)=>{
+              setText(e.target.textContent);
+              setActiveBtn('Created');
+            }}
+          >
+            Created
+          </button>
+          <button
+            type='button'
+            className={`${activeBtn === "saved" ? activeBtnStyles : notActiveBtnStyles}`}
+            onClick={(e)=>{
+              setText(e.target.textContent);
+              setActiveBtn('saved');
+            }}
+          >
+            Saved
+          </button>
+        <div>
+          <MasonryLayout pins={pins}/>
+        </div>
+
+        {pins?.length === 0 && (
+          <div>
+            No pins found.
+          </div>
+        )}
+      </div>
     </div>
   )
 };
