@@ -44,7 +44,7 @@ const PinDetails = ({user}) => {
       setAddingComment(true);
 
       client.patch(pinId).setIfMissing({comments: []})
-      .insert('after', 'comments[-1]', [{comment, _key: uuidv4(), postedBy: {_type: 'postedBy', _ref: user._id}}])
+      .insert('after', 'comments[-1]', [{comment, _key: uuidv4(), postedBy: {_type: 'postedBy', _ref: user?._id}}])
       .commit()
       .then(()=>{
         fetchPinDetails();
@@ -61,20 +61,78 @@ const PinDetails = ({user}) => {
   }
 
   return (
-  //  <>
-  //   {pinDetail && (
-      <div className='flex xl-flex-row flex-col m-auto bg-white' style={{maxWidth: '1500px', borderRadius: '32px'}}>
+   <>
+    {pinDetail && (
+      <div className='flex xl:flex-row flex-col m-auto bg-white' style={{maxWidth: '1500px', borderRadius: '32px'}}>
         <div className='flex justify-start items-center md:items-start flex-initial'>
         <img
-              className="rounded-t-3xl rounded-b-lg"
+              className="rounded-t-3xl rounded-b-lg "
               src={(pinDetail?.image && urlFor(pinDetail?.image).url())}
               alt="user-post"
             />
-          
+        </div>
+        <div>
+          <div>
+            <div>
+              <a>
+                <MdDownloadForOffline/>
+              </a>
+            </div>
+            <a href={pinDetail.destination} target="_blank" rel="noreferrer">
+              {pinDetail.destination?.slice(8)}
+            </a>
+          </div>
+          <div>
+            <h1>
+              {pinDetail.title}
+            </h1>
+            <p>{pinDetail.about}</p>
+          </div>
+          <Link to={`/user-profile/${pinDetail?.postedBy?._id}`} className=''>
+            <img src={pinDetail?.postedBy?.image} alt='user-profile'/>
+            <p>{pinDetail?.postedBy?.userName}</p>
+          </Link>
+          <h2>Comments</h2>
+          <div>
+            {pinDetail?.comments?.map((cmt)=>(
+              <div key={cmt.comment}>
+                <img src={cmt.postedBy?.image} alt="commented-user"/>
+                <div>
+                  <p>{cmt.postedBy?.userName}</p>
+                  <p>{cmt.comment}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div>
+            <Link to={`/user-profile/${user?._id}`}>
+              <img src={user?.image} alt='user-profile'/>
+            </Link>
+            <input
+              type='text'
+              placeholder='add a comment'
+              value={comment}
+              onChange={(e)=>setComment(e.target.value)}
+            />
+            <button type='button' onClick={addComment}>
+                {addingComment ? 'Adding' : 'Done'}
+            </button>
+          </div>
         </div>
       </div>
-  //   )}
-  //  </>
+  )}
+  {pins?.length > 0 &&(
+    <h2>
+      More Like This?..
+    </h2>
+  )}
+
+  {pins ? (
+    <MasonryLayout pins={pins}/>
+  ) : (
+    <Spinner message="loading more pins.."/>
+  )}
+  </>
   
   )
 }
