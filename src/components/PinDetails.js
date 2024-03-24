@@ -2,7 +2,7 @@ import React, {useState, useEffect, useCallback} from 'react'
 import {MdDownloadForOffline} from "react-icons/md";
 import {Link, useParams} from "react-router-dom";
 import {v4 as uuidv4} from "uuid";
-
+import {BsFillArrowUpRightCircleFill} from "react-icons/bs";
 import {client, urlFor} from "../utils/client";
 import MasonryLayout from './MasonryLayout';
 import { pinDetailMorePinQuery, pinDetailQuery } from '../utils/data';
@@ -82,9 +82,16 @@ const PinDetails = ({user}) => {
                 <MdDownloadForOffline/>
               </a>
             </div>
-            <a href={pinDetail.destination} target="_blank" rel="noreferrer">
-              {pinDetail.destination?.slice(8)}
-            </a>
+            {/* <a href={pinDetail.destination} target="_blank" rel="noreferrer">
+                {pinDetail?.destination?.slice(8)}
+            </a> */}
+            {pinDetail?.destination?.slice(8).length > 0 ? (
+                <a href={pinDetail?.destination} target='_blank' rel='noreferrer' className='bg-white flex items-center gap-2 text-black font-bold p-2 pl-4 pr-4 rounded-full opacity-70 hover:opacity-100 hover:shadow-md'>
+                  {' '}
+                  <BsFillArrowUpRightCircleFill/>
+                  {pinDetail?.destination?.slice(8,17)}...
+                </a>
+              ):undefined}
           </div>
           <div>
             <h1>
@@ -119,7 +126,7 @@ const PinDetails = ({user}) => {
               onChange={(e)=>setComment(e.target.value)}
             />
             <button type='button' onClick={addComment}>
-                {addingComment ? 'Adding' : 'Done'}
+                {addingComment ? 'Adding' : 'Post'}
             </button>
           </div>
         </div>
