@@ -74,7 +74,11 @@ const PinDetails = ({user}) => {
         <div className='w-full p-5 flex-1 xl:min-2-620'>
           <div className='flex items-center justify-between'>
             <div className='flex gap-2 items-center'>
-              <a className='bg-secondaryColor p-2 text-xl rounded-full flex items-ccenter justify-center text-dark opacity-75 hover:opacity-100 hover:cursor-pointer'>
+              <a 
+                download
+                href={`${pinDetail?.image?.asset?.url}?dl=`}
+                className='bg-secondaryColor p-2 text-xl rounded-full flex items-ccenter justify-center text-dark opacity-75 hover:opacity-100 hover:cursor-pointer'
+                >
                 <MdDownloadForOffline/>
               </a>
             </div>
